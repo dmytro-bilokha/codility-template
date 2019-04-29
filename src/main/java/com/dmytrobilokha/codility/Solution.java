@@ -1,26 +1,27 @@
 package com.dmytrobilokha.codility;
 
+import java.util.Arrays;
+
 class Solution {
 
-    public int solution(int input) {
-        int maximumGap = 0;
-        int currentGap = 0;
-        boolean previousBit = false;
-        boolean insideGap = false;
-        for (int shiftedN = input; shiftedN > 0; shiftedN = shiftedN >> 1) {
-            boolean currentBit = (shiftedN & 1) != 0;
-            boolean newInsideGap = !currentBit && insideGap || !currentBit && previousBit;
-            if (insideGap && !newInsideGap) {
-                maximumGap = Math.max(maximumGap, currentGap);
-                currentGap = 0;
+    public int solution(int[] input) {
+        int[] sortedNumbers = Arrays.copyOf(input, input.length);
+        Arrays.sort(sortedNumbers);
+        int previousNumber = -sortedNumbers[0];
+        int numberCount = 0;
+        for (int currentNumber : sortedNumbers) {
+            if (previousNumber == currentNumber) {
+                numberCount++;
+            } else {
+                if ((numberCount & 1) == 0) {
+                    numberCount = 1;
+                    previousNumber = currentNumber;
+                } else {
+                    return previousNumber;
+                }
             }
-            if (newInsideGap) {
-                currentGap++;
-            }
-            insideGap = newInsideGap;
-            previousBit = currentBit;
         }
-        return maximumGap;
+        return previousNumber;
     }
 
 }

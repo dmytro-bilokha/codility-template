@@ -13,18 +13,13 @@ public class SolutionTest {
     @DataProvider(name = "binary-provider")
     public Object[][] dataProvider() {
         return new Object[][]{
-                {0b1, 0}
-                , {0, 0}
-                , {0b101, 1}
-                , {0b111, 0}
-                , {0b10010001, 3}
-                , {0b1000010001, 4}
-                , {0b11001101, 2}
+                {new int[]{1, 2, 1}, 2}
+                , {new int[]{1, 2, 2}, 1}
         };
     }
 
     @Test(dataProvider = "binary-provider")
-    public void findsSolution(int input, int output) {
+    public void findsSolution(int[] input, int output) {
         assertEquals(solution.solution(input), output);
     }
 
